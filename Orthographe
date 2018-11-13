@@ -1,0 +1,4 @@
+--Orthographe--
+
+oneWord a | 1 = "un" | 2 = "deux"
+  
