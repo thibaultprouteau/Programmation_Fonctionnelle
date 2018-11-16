@@ -28,7 +28,10 @@ dizaine x
   | x == 8 = "quatre-vingt"
 
 ecriture x
-  | x <=16 = oneWord x
-  | x/10 == 8 = (dizaine (x/10))+"s"
-  | x%10 == 0 = dizaine x
-  | (x%10 == 1 &&
+  | (x < 17 ) = oneWord x
+  | (x/10 == 8 && (x`mod`10)==0) = (dizaine (x/10))++"s"
+  | (x/10 == 8 && ((x`mod`10)<>0)) = (dizaine (x/10))++"-"++(oneWord (x`mod`10))
+  | (x`mod`10) == 0 = dizaine x
+  | ((x`mod`10) == 1 && (x/10)<7) = (dizaine x)++" et "++(oneWord (x`mod`10))
+  | ((x/10) == 7 && (x`mod`10)== 1) = (dizaine x)++" et "++(oneWord ((x`mod`10)+10))
+  | ((x/10) == 7 || (x/10) == 9) = (dizaine ((x/10)-1))++"-"++(oneWord ((x`mod`10)+10))
