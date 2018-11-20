@@ -1,6 +1,7 @@
 --Orthographe--
 
 oneWord x
+  | x == 0 = "zero"
   | x == 1 = "un"
   | x == 2 = "deux"
   | x == 3 = "trois"
@@ -27,11 +28,14 @@ dizaine x
   | x == 6 = "soixante"
   | x == 8 = "quatre-vingt"
 
+
+
 ecriture x
-  | (x < 17 ) = oneWord x
-  | (x/10 == 8 && (x`mod`10)==0) = (dizaine (x/10))++"s"
-  | (x/10 == 8 && ((x`mod`10)<>0)) = (dizaine (x/10))++"-"++(oneWord (x`mod`10))
-  | (x`mod`10) == 0 = dizaine x
-  | ((x`mod`10) == 1 && (x/10)<7) = (dizaine x)++" et "++(oneWord (x`mod`10))
-  | ((x/10) == 7 && (x`mod`10)== 1) = (dizaine x)++" et "++(oneWord ((x`mod`10)+10))
-  | ((x/10) == 7 || (x/10) == 9) = (dizaine ((x/10)-1))++"-"++(oneWord ((x`mod`10)+10))
+  | x < 17  = oneWord x
+  | (((x`div`10) == 8) && (x`mod`10)==0) = (dizaine (x`div`10))++"s"
+  | (x`div`10 == 8 && ((x`mod`10)/=0)) = (dizaine (x`div`10))++"-"++(oneWord (x`mod`10))
+  | (((x`div`10) == 7) && ((x`mod`10)== 1)) = (dizaine ((x`div`10)-1))++" et "++(ecriture ((x`mod`10)+10))
+  | ((x`div`10) == 7 || (x`div`10) == 9) = (dizaine ((x`div`10)-1))++"-"++(ecriture ((x`mod`10)+10))
+  | (x`mod`10) == 0 = dizaine (x`div`10)
+  | ((((x`div`10)<7) && (x`mod`10/=1))) = (dizaine (x`div`10))++"-"++(oneWord (x`mod`10))
+  | ((x`mod`10) == 1 && (x`div`10)<7) = (dizaine (x`div`10))++" et "++(oneWord (x`mod`10))
